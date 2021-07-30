@@ -5,7 +5,8 @@
  * @brief 线程内存缓存，使用thread local storage(TLS)保证线程独有
  * 用于小于64k的内存分配，分配不需要加锁保证高效
  */
-class ThreadCache {
+class ThreadCache
+{
 public:
     // 申请内存
     void *Allocate(size_t size);
@@ -26,26 +27,29 @@ private:
 };
 
 // 静态TSL 在每个线程中为其申请空间
-_declspec(thread)
-static ThreadCache *pThreadCache = nullptr;
+_declspec(thread) static ThreadCache *pThreadCache = nullptr;
 
 //实现
 
-void *ThreadCache::Allocate(size_t size) {
+void *ThreadCache::Allocate(size_t size)
+{
     // 计算所需要的内存对象在ThreadCache中的下标
     size_t index = SizeClass::ListIndex(size);
     FreeList &freeList = _freeLists[index];
     // freeList不为空直接返回
-    if (!freeList.Empty()) {
+    if (!freeList.Empty())
+    {
         return freeList.Pop();
     }
-        // 否则从CentralCache中获取内存对象
-    else {
+    // 否则从CentralCache中获取内存对象
+    else
+    {
         return FetchFromCentralCache(SizeClass::RoundUp(size));
     }
 }
 
-void ThreadCache::deAllocate(void *ptr, size_t size) {
+void ThreadCache::deAllocate(void *ptr, size_t size)
+{
     // 计算释放的内存对象在ThreadCache中的下标
     size_t index = SizeClass::ListIndex(size);
     FreeList &freeList = _freeLists[index];
@@ -54,13 +58,15 @@ void ThreadCache::deAllocate(void *ptr, size_t size) {
 
     // 如果链表中的数量
     size_t num = SizeClass::NumMoveSize(size);
-    if (freeList.Num() >= num) {
+    if (freeList.Num() >= num)
+    {
         // 把链表中的全部内存对象释放回CentralCache中
         ListTooLong(freeList, num, size);
     }
 }
 
-void ThreadCache::ListTooLong(FreeList &freeList, size_t num, size_t size) {
+void ThreadCache::ListTooLong(FreeList &freeList, size_t num, size_t size)
+{
     void *start = nullptr, *end = nullptr;
     freeList.PopRange(start, end, num);
 
@@ -70,7 +76,8 @@ void ThreadCache::ListTooLong(FreeList &freeList, size_t num, size_t size) {
 }
 
 // 从中心缓存获取span
-void *ThreadCache::FetchFromCentralCache(size_t size) {
+void *ThreadCache::FetchFromCentralCache(size_t size)
+{
     size_t num = SizeClass::NumMoveSize(size);
 
     void *start = nullptr, *end = nullptr;
@@ -80,9 +87,12 @@ void *ThreadCache::FetchFromCentralCache(size_t size) {
     size_t actualNum = CentralCache::GetCentralCacheInstance().FetchRangeObj(start, end, num, size);
 
     // 将获取到的多的内存对象添加到链表中，并返回第一个内存对象
-    if (actualNum == 1) {
+    if (actualNum == 1)
+    {
         return start;
-    } else {
+    }
+    else
+    {
         size_t index = SizeClass::ListIndex(size);
         FreeList &list = _freeLists[index];
         list.PushRange(NextObj(start), end, actualNum - 1);
