@@ -62,11 +62,13 @@ CentralCacheÓÐ184¸öSpanList£¬Ã¿¸öSpanListÖÐµÄÄÚ´æ²ð³ÉÐ¡¿éÓÃFreeListµÄÐÎÊ½Á¬ÆðÀ´¡
 
 PageCacheÓÐ129¸öSpanList£¬SpanListÖÐµÄSpan²»ÇÐ·Ö³É¸üÐ¡µÄÄÚ´æ¡£µÚÒ»¸öSpanListÖÐµÄSpan±£´æÒ»¸öÒ³¿ò£¬µÚ¶þ¸öSpanListÖÐµÄSpan±£´æÁ½¸öÒ³¿ò£¬ÒÔ´ËÀàÍÆ¡£×î¶à¿ÉÒÔ¹ÜÀí128*4kb = 512kbµÄÄÚ´æ¡£
 
-#### radix
+#### radix »ùÊýÊ÷
 
 TODO
 
-Ä¿Ç°Àí½âÎªÒ»¸ö¿ìËÙµÄ¹þÏ£½á¹¹£¬ÓÃÓÚ¸ù¾ÝÒ³ºÅ²éÑ¯Span
+Ä¿Ç°Ê¹ÓÃµÄÊÇboostÊµÏÖºÃµÄ½á¹¹£¬¸ù¾ÝÎ¬»ù°Ù¿Æ½éÉÜ£¬»ùÊýÊ÷¸üÊÊÓÃÓÚ¶ÔÓÚ½ÏÐ¡µÄ¼¯ºÏ£¨ÓÈÆäÊÇ×Ö·û´®ºÜ³¤µÄÇé¿öÏÂ£©ºÍÓÐºÜ³¤ÏàÍ¬Ç°×ºµÄ×Ö·û´®¼¯ºÏ¡£Ã¤²ÂÕâºÍÄÚ´æµØÖ·ºÜÏñ£¬Ç°×ºÏàÍ¬¡£
+
+¾Íµ±³ÉÒ»¸ö¹þÏ£±íÀ´ÓÃ£¬ÓÃÓÚ¸ù¾ÝÒ³ºÅ²éÑ¯Span
 
 ## ½á¹¹
 
